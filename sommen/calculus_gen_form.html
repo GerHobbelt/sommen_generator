@@ -1,0 +1,3436 @@
+<?php
+
+class DebugReporting
+{
+    public static $dbg;
+}
+
+DebugReporting::$dbg = 0;  // debug level; goes all the way up to 4 now
+
+
+define("EDUCATION_WEBSITE", true);
+
+?>
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 18 June 2008), see www.w3.org">
+  <link rel="stylesheet" type="text/css" href="../edu.css">
+
+  <title></title>
+  <style type="text/css">
+/*<![CDATA[*/
+  input.c1 {width: 640px}
+  /*]]>*/
+  .style1 {
+    font-family: Georgia;
+  }
+  .style2 {
+    font-family: "Times New Roman";
+  }
+  </style>
+</head>
+
+<body>
+  <h1>Create Calculus Exercise Leaf (= 'Chapter')</h1>
+
+  <h2>Your choice:</h2>
+
+  <ul>
+    <li>
+      <p><a href="#Select_presets_and_submit">Select one or more 'presets'</a>,
+      adjust the chapter number, counts and flags to your choice and click the
+      'OK to Generate' button to produce that set of exercises, or</p>
+    </li>
+
+    <li>
+      <p><a href="#Submit_a_Custom_Configuration_instead">Submit your own
+      custom configuration</a> file or text. (See the <a href=
+      "calculus_gen_form_help.html">on-line help</a> for more info on the
+      structure of such a configuration.)</p>
+    </li>
+  </ul><?php
+
+                        require("libsrc/exercise_generator.php");
+                        require("libsrc/parse_config_inputs.php");
+
+
+                        $eg = new ExerciseGenerator($config);
+
+                        $lang = $eg->GetLanguage();
+
+                        ?>
+
+  <h2><a name="Select_presets_and_submit">Select preset(s) and submit</a></h2>
+
+  <form action="calculus.html" method="get">
+    <p>Chapter number: <input name="chapter" value="1"></p>
+
+    <p>Language: <select name="language" size="1">
+      <?php
+                                                                            printf("<option value=\"en\" %s>\n", ($lang == "en" ? "selected=\"selected\"" : ""));
+                                                                            printf("  English\n");
+                                                                            printf("</option>\n");
+
+                                                                            printf("<option value=\"nl\" %s>\n", ($lang == "nl" ? "selected=\"selected\"" : ""));
+                                                                            printf("  Dutch\n");
+                                                                            printf("</option>\n");
+                                                                        ?>
+    </select></p>
+
+    <p>Select the preset(s) you wish to mix (Ctrl-Click to select multiple
+    presets at once):</p>
+
+    <p><select name="PresetCfg[]" multiple="multiple" size="12">
+      <option value="">
+        (none)
+      </option><?php
+                                                                            $eg->ShowStylesAsSelectOptions();
+                                                                        ?>
+    </select></p>
+
+    <h3><a name="Page_Setup">Page Setup</a></h3>
+
+    <p>Number of exercises to create: <input name="ex_cnt" value="64"></p>
+
+    <p class="FinePrint">NOTE: The effective number of exercises produced MAY
+    be less than this number when the generator cannot produce more.</p>
+
+    <p>Display Columns: <input name="cols" value="4"></p>
+
+    <p>Show Exercises: <input name="show_ex" type="checkbox" checked="checked"
+    value="1">(Print exercises for use by student)</p>
+
+    <p>Show Answer Sheet: <input name="show_ans" type="checkbox" value="1"
+    checked="checked">(Print corresponding answer section for exercise
+    validation by teacher or student (self-check).)</p>
+
+    <p>Show Command for Recall: <input name="show_cmd" type="checkbox" checked=
+    "checked" value="1">(Print the command file used to produce the exercise
+    sheet at the bottom of the page. When you keep that bit, you can lateron
+    copy&amp;paste it into the text edit box below to reproduce the exact same
+    exercise / answer sheet.)</p>
+
+    <p>Show Statistics: <input name="show_stats" type="checkbox" checked=
+    "checked" value="1">(Print some technical statictics at the bottom of the
+    generated page)</p>
+
+    <p>Number of operators in the sums: <input name="op_cnt" value=
+    "1"></p><input value="OK to Generate" type="submit" name="OKtoGenerate"
+    class="c1">
+  </form>
+  <hr>
+
+  <h2><a name="Submit_a_Custom_Configuration_instead">Submit a Custom
+  Configuration instead</a></h2><script type="text/javascript">
+//<![CDATA[
+  <!-- 
+  function mirrorFileName()
+  {
+    // copy filename to another tag; see also http://nl3.php.net/manual/en/features.file-upload.php#64087
+    //
+    // contrary to what's shown there, using the onChange event, rather use the 'onClick' in the submit
+    // button so ensure this works as you'd expect, even when testing a web form repetively (and FF 2 at least
+    // does not trigger onChange when you open the file selector and select the file that's already
+    // mentioned there - NOT a browser error, mind you, but it didn't help when I still had the onChange code
+    // and was testing tiny form edits, which discarded the filename copy but kept the file input field intact.)
+    document.getElementById('uploaded_filenamepath').value = document.getElementById('ConfigFile').value;
+    return 1;
+  }
+  //-->
+  //]]>
+  </script>
+
+  <fieldset name="CustomExerciseSets">
+    <legend>Creating Custom Exercises</legend>
+
+    <form enctype="multipart/form-data" action="calculus.html" method="post"
+    name="uploadform" onclick="javascript:mirrorFileName()">
+      <!-- MAX_FILE_SIZE must precede the file input field -->
+      <input type="hidden" name="MAX_FILE_SIZE" value="30000"> <input type=
+      "hidden" name="uploaded_filenamepath" id="uploaded_filenamepath">
+
+
+      <blockquote>
+        <p class="SmallPrint">You can <a href="presets.txt">download the
+        presets configuration file here</a>. It may be useful to copy and
+        expand on or edit the presets in there, instead of having to create
+        your own from scratch. <a href="calculus_gen_form_help.html">The technical manual</a> describing how you might go
+        about creating your own sum templates can be found <a href=
+        "calculus_gen_form_help.html">here</a>.</p>
+      </blockquote>
+
+
+      <p>Select and send your own custom exercise configuration file:
+      <input name="ConfigFile" type="file" size="128" id="ConfigFile">
+      <input name="SendCfgFile" type="submit" value="Send"></p>
+
+      <p>... or copy &amp; paste your custom configuration in this text area
+      and submit that:</p>
+    </form>
+
+    <form enctype="multipart/form-data" action="calculus.html" method="post"
+    name="uploadTextform">
+      <p>
+      <textarea name="CustomConfigText" cols="128" rows="24">
+# no custom config -- see on-line help for a description of the format
+
+
+# uncomment lines to activate (= remove '#' at start of line)
+
+
+
+# debug: set to 0 to disable debug display altogether; set to 1 for some info, increase value up to 4 for ever more info
+debug: 0
+
+# shuffled_repeat_count: integer &gt; 0 will 'repeat' the calculated set of exercises in random order, i.e. the chapter will 
+# then contain duplicates.
+#shuffled_repeat_count: 2
+
+# try_single_limit (default: 40) is integer which determines how many attempts are permitted per style per generator run: 
+# increase value when too few exercises are generated due to large reject percentage
+#try_single_limit: 100
+
+
+</textarea></p>
+
+      <p><input name="SubmitCustomCfgText" type="submit" value="Send" class=
+      "c1"></p>
+      
+  <h1>Technical Documentation</h1>
+
+  <p>This part describes all the commands and options available with the
+  calculus generator. Some examples are included to enhance understanding of
+  the subject matter.</p>
+
+  <h2>Interfacing</h2>
+
+  <p>The calculus generator can be accessed using GET and/or POST web requests;
+  if you need examples of both, you might wish to have a look at the HTML
+  sources for the generic web form <a href="calculus_gen_form2.html">here</a>
+  and <a href="calculus_gen_form.html">here</a> and the links to the calculus
+  generator PHP page in the <a href="calculus_programme.html">education
+  calendar</a>. Otherwise also have a look at the info provided by <a href=
+  "http://en.wikipedia.org/wiki/HTML_form">Wikipedia</a>.</p>
+
+  <p>When issuing a GET request, you should concatenate your selected set of
+  tags (see table below for a list of those) according to <a href=
+  "http://tools.ietf.org/html/rfc3986">RFC3986</a>. See also <a href=
+  "http://en.wikipedia.org/wiki/Query_string">Wikipedia</a> for more info.</p>
+
+  <p>When using a POST request, you should adhere to <a href=
+  "http://tools.ietf.org/html/rfc2616">RFC2616</a>. (<a href=
+  "http://en.wikipedia.org/wiki/HyperText_Transfer_Protocol">Wikipedia</a>)
+  Some features (config file upload) are only possible using HTTP POST. Make
+  sure you encode the posted data using the multipart/form-data MIME type as
+  specified by the <a href=
+  "http://www.w3.org/TR/html401/interact/forms.html">W3C</a> and <a href=
+  "http://tools.ietf.org/html/rfc2388">RFC2388</a>.</p>HTTP GET/POST request
+  tags
+
+  <table>
+    <tbody>
+      <tr>
+        <th>tag</th>
+
+        <th>argument</th>
+
+        <th>HTTP GET</th>
+
+        <th>HTTP POST</th>
+
+        <th>equivalent config file command</th>
+
+        <th>Notes</th>
+      </tr>
+
+      <tr>
+        <td>
+          <p>chapter</p>
+        </td>
+
+        <td>
+          <p>integer</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>chapter:</p>
+        </td>
+
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>ex_cnt</p>
+        </td>
+
+        <td>
+          <p>integer</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>exercise_count:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>cols</p>
+        </td>
+
+        <td>
+          <p>integer</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>display_columns:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>show_ex</p>
+        </td>
+
+        <td>
+          <p>boolean (0/1)</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>display_exercises:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>show_ans</p>
+        </td>
+
+        <td>
+          <p>boolean (0/1)</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>display_answers:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>show_stats</p>
+        </td>
+
+        <td>
+          <p>boolean (0/1)</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>display_statistics:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>show_cmd</p>
+        </td>
+
+        <td>
+          <p>boolean (0/1)</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>display_command_copy:</p>
+        </td>
+
+        <td>
+          <p>&nbsp;</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>PresetCfg[]</p>
+        </td>
+
+        <td>
+          <p>string</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>preset:</p>
+        </td>
+
+        <td>
+          <p>Do not forget to include the two square brackets in the tag:
+          <code>PresetCfg[]</code></p>
+
+          <p>Without those square brackets, you will only be able to request
+          one(1) preset per request, while, when you include those square
+          brackets, you will be able to request a mix of multiple presets by
+          listing each preset in the requested mix as a separate
+          <code>PresetCfg[]</code> item.</p>
+
+          <p>A HTTP GET URL query snippet will then look something like
+          this:</p>
+          <pre>
+...&amp;PresetCfg[]=AA&amp;PresetCfg[]=MA&amp;PresetCfg[]=MB&amp;...
+</pre>
+
+          <p>when you request an exercise generated from the mix of presets AA,
+          MA and MB.</p>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>ConfigFile</p>
+        </td>
+
+        <td>
+          <p>data: file upload</p>
+        </td>
+
+        <td>
+          <p>-</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>---</p>
+        </td>
+
+        <td>
+          <p>ConfigFile should be the name of the field where the path to the
+          file to upload to the calculus generator is listed in your web
+          form.</p>
+
+          <p>Make sure the form itself has an <em>enctype</em> of
+          <em>multipart/form-data</em> like this example:</p>
+          <pre>
+&lt;form enctype="multipart/form-data" action="calculus.php" method="post"&gt;
+</pre>
+
+          <p>because if you don't, the file upload won't work.</p>
+
+          <p>A basic file upload web form field might look like this
+          example:</p>
+          <pre>
+&lt;input name="ConfigFile" type="file" size="128" id="ConfigFile" /&gt; 
+</pre>
+
+          <blockquote>
+            <p class="CenteredLargePrint">WARNING</p>
+
+            <p>Add a hidden field to the web form stating the 'soft limit' for
+            PHP file upload like this example, which limits uploaded files to
+            30000 bytes:</p>
+            <pre>
+&lt;input type="hidden" name="MAX_FILE_SIZE" value="30000" /&gt;
+</pre>
+
+            <p>The above is also documented <a href=
+            "http://nl2.php.net/features.file-upload">here at the PHP
+            site</a>.</p>
+          </blockquote>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <p>CustomConfigText</p>
+        </td>
+
+        <td>
+          <p>(multiline) text</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>&radic;</p>
+        </td>
+
+        <td>
+          <p>---</p>
+        </td>
+
+        <td>
+          <p><code>CustomConfigText</code> is a tag specifically designed to
+          allow sending custom configurations in requests to the calculus
+          generator using <em>&lt;textarea&gt;</em> HTML form fields like the
+          one in this example:</p>
+          <pre>
+&lt;textarea name="CustomConfigText" cols="128" rows="24"&gt;
+# paste your custom config here...
+&lt;/textarea&gt;
+</pre>
+
+          <blockquote>
+            <p class="CenteredLargePrint">WARNING</p>
+
+            <p>Be aware that URL query strings are quite limited in size, so
+            submitting a multiline custom configuration using the
+            <code>CustomConfigText</code> tag in a HTTP GET web form may be
+            rejected when the custom configuration and other tag=value
+            combinations surpass the URL query limit in length.</p>
+
+            <p>Hence we advise you to employ the <code>CustomConfigText</code>
+            tag in HTTP POST based web forms only to prevent user confusion due
+            to rejects by the web server as query string limitations are
+            triggered.</p>
+          </blockquote>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <blockquote>
+    <p class="CenteredLargePrint">Notes</p>
+
+    <p>The table above lists the web form tags in the order in which these are
+    processed by the calculus generator web form interface.</p>
+
+    <p>Behind the scenes, these URL query string tags are all converted to
+    equivalent config file lines, where the uploaded <code>ConfigFile</code>
+    file contents and the <code>CustomConfigText</code> field value (i.e. the
+    <em>&lt;textarea&gt;</em> content) are copied verbatim.</p>
+
+    <p>Also note that all tags are treated as optional items at this conversion
+    stage and the combined results are concatenated, before the result is fed
+    to the calculus generator proper. This behaviour implies that you can
+    create web forms where you offer both custom config inputs
+    <code>ConfigFile</code> and <code>CustomConfigText</code> at the same time.
+    This is a legal use of the web form interface; when a user specifies
+    content for both (i.e. specifies a config file for upload <em>and</em>
+    enters one or more lines in the <code>CustomConfigText</code> field, both
+    bits of content are concatenated in the order as shown in the table above,
+    which means the <code>CustomConfigText</code> content will follow the
+    content of the uploaded config file. See <a href=
+    "calculus_gen_form2.html">here</a> for such a web form.</p>
+  </blockquote>See the documentation about the config file format below for
+  more info about the various tags and their precise behaviour.
+
+  <h2>The presets</h2>
+
+  <p>The <code>preset:</code> config field (and the <code>PresetCfg[]</code>
+  URL query string tag) can specify a single preset ID. When you upload a
+  custom config file, you can specify your own <em>additional</em> presets
+  between any set of <code>styles_def_start:</code> and
+  <code>styles_def_end:</code> marker lines (see also the config file format
+  description below), but the standard set of presets available with the
+  calculus generator is available <a href="presets.txt">here</a>.</p>
+
+  <blockquote>
+    <p class="CenteredLargePrint">Obscure Information</p>
+
+    <p>This <a href="presets.txt">preset textfile</a> is always loaded by the
+    calculus generator before your (custom) config/request data is processed.
+    Hence you cannot override these presets as with presets the rule applies:
+    first come is first served. I.e. any two presets, both called 'AA', will
+    only have the first of these used throughout the config file parse process,
+    thus 'hiding' the second preset definition.</p>
+  </blockquote>
+
+  <h2>The config file format</h2>
+
+  <p>The config/instruction file is a multiline ASCII text file, where each
+  line must match any of the following:</p>
+
+  <table>
+    <caption>
+      config line formats
+    </caption>
+
+    <tr>
+      <th>Format</th>
+
+      <th>Notes</th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+# comment line
+</pre>
+      </td>
+
+      <td>
+        <p>Any line starting with a hash (#) will be ignored.&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+ 
+</pre>
+      </td>
+
+      <td>
+        <p>An empty line is ignored too.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+global_option: value 
+</pre>
+      </td>
+
+      <td>
+        <p>Specifies the value for a 'globally applied' setting, where 'global'
+        means the setting is applied to all <em>styles</em> defined directly or
+        indirectly in <em>this</em> config file. ('Indirect' style definitions
+        are style definitions resulting from preset expansion.)</p>
+
+        <blockquote>
+          <p class="CenteredLargePrint">Obscure Information</p>
+
+          <p>Given multiple occurrences of a certain global option throughout
+          the (expanded) config/instruction file, the following rule applies:
+          the last active occurrence of each global option applies. Here we
+          mean with active that only those global option lines are regarded
+          which remain after all presets have been expanded.</p>
+
+          <p>An example may help. This completely fictious example:</p>
+          <pre>
+<strong>styles_def_start</strong>:
+<strong>A1</strong>
+glob_opt1: A
+---
+<strong>A2</strong>
+glob_opt1: B
+---
+B3
+preset: A2
+---
+<strong>styles_def_end</strong>:
+glob_opt1: C
+preset: B3
+glob_opt1: D
+</pre>
+
+          <p>... will be expanded thus (while implicitly declaring that
+          <code>glob_opt1: A</code> line in preset A1 very
+          <em><strong>in</strong>active</em> indeed):</p>
+          <pre>
+glob_opt1: C
+
+# B3 leads to A2 leads to this:
+glob_opt1: B
+
+glob_opt1: D
+</pre>
+
+          <p>... which will be parsed as if this had been written instead:</p>
+          <pre>
+# last occurrence wins:
+glob_opt1: D
+</pre>
+
+          <p>See also the obscure info bit at the
+          <code>styles_def_start:</code> / <code>styles_def_end:</code> marker
+          set below.</p>
+        </blockquote>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+cmd options 
+</pre>
+      </td>
+
+      <td>
+        <p>Specifies a single <em>style</em> of exercises to be generated, for
+        example a style which instructs the calculus generator to construct
+        <em>add</em>ing exercises (<code>cmd=add</code>), where, of course, the
+        additional options apply:</p>
+        <pre>
+# simple additions in the range 1..10
+add lh_low=1 lh_high=10 rh_low=1 rh_high=10 <br>
+</pre>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+styles_def_start:
+<em>preset_definition</em>
+<em>preset_definition</em>
+...
+styles_def_end: 
+</pre>
+      </td>
+
+      <td>
+        <p>The set of <code>styles_def_start:</code> and
+        <code>styles_def_end:</code> marker lines signals the calculus
+        generator config/instruction parser that a series of <em>preset
+        definitions</em> will follow. Such a section may contain zero or more
+        presets, each of which are formatted like this:</p>
+        <pre>
+<em>preset_ID</em>
+<em>config_line</em>
+<em>config_line</em>
+...
+---
+</pre>
+
+        <p>where <code><em>preset_ID</em></code> is any non-whitespace
+        character sequence, preferably consisting of alphanumeric and/or
+        numeric characters. The <strong>first</strong>
+        <code><em>preset_ID</em></code> which is identical to the value
+        following a <code>preset:</code> global option is considered a
+        <em>match</em>, resulting in all <code><em>config_lines</em></code> up
+        to, but not including, the terminating triple dash <code>---</code>
+        being copied verbatim, replacing the preset statement in the
+        config/instruction file.</p>
+
+        <p>Note that preset definitions can contain <code>preset:</code> option
+        lines, thus allowing the <em>nested</em> use of presets.</p>
+
+        <blockquote>
+          <p class="CenteredLargePrint">Obscure Information</p>
+
+          <p>Given this completely fictious config/instruction file
+          snippet:</p>
+          <pre>
+<strong>styles_def_start</strong>:
+<strong>A1</strong>
+add1
+---
+<strong>styles_def_end</strong>:
+preset: A2
+<strong>styles_def_start</strong>:
+<strong>A1</strong>
+IGNORED_add2
+---
+<strong>A2</strong>
+preset:A1
+preset:A1
+add3
+---
+<strong>styles_def_end</strong>:
+add4
+</pre>
+
+          <p>... the second A1 preset definition will be completely ignored and
+          the completely expanded result will thus be:</p>
+          <pre>
+# A2 expanded:
+# nested 1st A1 expanded
+add1
+# nested 2nd A1 expanded
+add1
+# add the last bit of A2:
+add3
+# add the last bit outside the preset definition blocks:
+add4
+</pre>
+
+          <p>Note that this different from the treatment of <em>global
+          options</em>, where the reverse applies: the <em>last</em> occurrence
+          wins! (See the obscure info bit at the <em>global option</em> line
+          format above.</p>
+        </blockquote>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+description:
+<em>multiline text</em>
+...
++
+</pre>
+
+        <p>or</p>
+        <pre>
+description:
+<em>multiline text</em>
+...
+=
+</pre>
+      </td>
+
+      <td>
+        <p>The multiline text in these descriptions&nbsp;</p>
+
+        <ul>
+          <li>
+            <p>either <em>is concatenated with any</em> previously collected
+            description text in this config/instruction file (when terminated
+            by a plus (+))</p>
+          </li>
+
+          <li>
+            <p>or <em>replaces all</em> previously collected description text
+            in this config/instruction file (when terminated by an identity
+            symbol (=)).</p>
+          </li>
+        </ul>
+
+        <p>This completely fictitious example:</p>
+        <pre>
+description:
+A
++
+description:
+B
++
+</pre>
+
+        <p>would produce this overall description:</p>
+        <pre>
+<em>A
+B</em>
+</pre>
+
+        <p>while this (note the '=' at the end there):</p>
+        <pre>
+description:
+A
++
+description:
+B
+=
+</pre>
+
+        <p>would produce this overall description instead:</p>
+        <pre>
+<em>B</em>
+</pre>
+      </td>
+    </tr>
+  </table>
+
+  <p>Which leaves us with two things to describe:</p>
+
+  <ul>
+    <li>
+      <p>the supported <em>global options</em>, their format and intended
+      purpose, and</p>
+    </li>
+
+    <li>
+      <p>the supported style commands (<code>cmd</code>), their options and
+      intended purpose.</p>
+    </li>
+  </ul>
+
+  <p>So here they are:</p>
+
+  <ul>
+    <li>
+      <p><a href="#The_global_options">The global options</a></p>
+    </li>
+
+    <li>
+      <p><a href="#The_style_commands_ie_Style_Definitions">The style commands
+      (<code>cmd</code>) / Style Definitions</a></p>
+    </li>
+  </ul>
+
+  <h2><a name="The_global_options" id="The_global_options">The global
+  options</a></h2>
+
+  <p>All <code>global_option</code> lines start with a word (alphanumerical,
+  numerical and other non-whitespace characters combined), terminated by a ':'
+  colon:</p>
+  <pre>
+description:
+</pre>
+
+  <p>All subsequent lines are treated as a description to be displayed. The
+  description <em>ends</em> when a single '+' plus or '=' equals sign is
+  located on a line.</p>
+
+  <p>When terminated by a '+' plus, the description will be appended to any
+  previous description (use this with preset descriptions, so their
+  descriptions concatenate when the user specifies multiple presets in a single
+  run).</p>
+
+  <p>When terminated by an '=' equals sign, the description test will
+  <em>replace</em> any previous description. (Use this to override
+  (concatenated) preset descriptions.)</p>
+
+  <blockquote>
+    <p class="CenteredLargePrint">Caveat</p>
+
+    <p>Currently, descriptions are not used / displayed anywhere.</p>
+
+    <p>We are considering allowing arbitrary HTML formatting in the multiline
+    <code>description:</code> text, which will be copied verbatim to the
+    generated page...</p>
+  </blockquote>
+  <pre>
+debug:
+</pre>
+
+  <p>Followed by an integer number in the range 0..4: 0 is quiet, 4 is a
+  shitload of diagnostics.</p>
+  <pre>
+chapter:
+</pre>
+
+  <p>Followed by an integer number. This number is used as-is to generate
+  another 'chapter' of exercises.</p>
+
+  <p>The combination of <em>all</em> settings, including chapter number,
+  determine which exercises are produced: to reproduce the exact same exercises
+  at a later date, you'll need to 'remember' the configuration and chapter
+  number somewhere.</p>
+  <pre>
+chapter_format:
+</pre>
+
+  <p>Default: "%d". Can be anything, but should include that "%d" too to
+  include the chapter number in the printed chapter header.</p>
+
+  <p>Can be used to add a custom category code or other to the chapter, e.g.
+  "A-%d" will display as Chapter A-1 for chapter number == 1.</p>
+  <pre>
+exercise_count:
+</pre>
+
+  <p>Absolute maximum number of exercises to generate for this chapter. Note
+  that depending on limitations put to the generator, <em>less</em> exercises
+  <em>may</em> be produced, but <em>never</em> more.</p>
+
+  <p>Default: 64</p>
+  <pre>
+display_columns:
+</pre>
+
+  <p>Sets the number of columns to display the exercises in. Must be an integer
+  number &gt;= 1. Default: 4</p>
+  <pre>
+display_exercises:
+</pre>
+
+  <p>Boolean as integer: 0 is FALSE (default), 1 is TRUE. When TRUE the
+  exercises will be printed.</p>
+  <pre>
+display_answers:
+</pre>
+
+  <p>Boolean as integer: 0 is FALSE (default), 1 is TRUE. When TRUE the answers
+  to the exercises will be printed.</p>
+
+  <p>Of course, this can be combined with 'display_exercises:1' so both
+  exercises and answers are shown.</p>
+  <pre>
+display_statistics:
+</pre>
+
+  <p>Boolean as integer: 0 is FALSE (default), 1 is TRUE. When TRUE some tech
+  stats are printed at the bottom of the generated page.</p>
+  <pre>
+display_command_copy:
+</pre>
+
+  <p>Boolean as integer: 0 is FALSE (default), 1 is TRUE. When TRUE the
+  complete command sequence required to exactly reproduce the generated page is
+  printed at the bottom of the generated page. This is useful as you can copy
+  that info to a local document / file and copy &amp; paste it into the web
+  form's text edit box (bottom half; see also our <a href="#sample4">example #4
+  above</a>) to exactly recreate this particular exercise sheet.</p>
+  <pre>
+shuffled_repeat_count:
+</pre>
+
+  <p>Integer number &gt;= 0 (default: 0) which configures the number of copies
+  of the exercise collection should be made to attempt to produce the
+  'exercise_count' exercises after all, even when the system did not turn up
+  'exercise_count' unique exercises. Will pick random exercises from the
+  already existing ones and append them to the exercises.</p>
+  <pre>
+try_single_limit:
+</pre>
+
+  <p>Integer number &gt; 0 (default: 40): increase to make the code try harder
+  (i.e. perform more trials) to generate your desired exercises.</p>
+  <pre>
+styles_def_start:
+</pre>
+
+  <p>A marker which signals the generator that the subsequent lines will define
+  presets. A preset definition block must be terminated by the marker:</p>
+  <pre>
+styles_def_end:
+</pre>
+  <pre>
+preset:
+</pre>
+
+  <p>You can reference the standard presets and/or your own presets using this
+  line: the ID following the ':' colon identifies the preset you wish to
+  insert/use at this spot in your command sequence; if the ID cannot be found
+  anywhere in the preset definition collection, an error will be issued.</p>
+
+  <p>The following presets are predefined:</p>
+
+  <table id="table1">
+    <caption>
+      <a name="Predefined_presets" id="Predefined_presets">Predefined
+      presets</a>
+    </caption>
+
+    <tr>
+      <th>preset_ID</th>
+
+      <th>Short description / Notes</th>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AA</p>
+      </td>
+
+      <td>
+        <p>simple additions in the range 1..5</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AB</p>
+      </td>
+
+      <td>
+        <p>simple additions in the range 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AC</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AD</p>
+      </td>
+
+      <td>
+        <p>mixed add/sub in range 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AE</p>
+      </td>
+
+      <td>
+        <p>additions in the range 15..19</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AF</p>
+      </td>
+
+      <td>
+        <p>additions in the range 11..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AG</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 11..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AH</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AI</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AJ</p>
+      </td>
+
+      <td>
+        <p>mixed add/sub in the range 1..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AK</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..100: decades only!</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AL</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..100: unit-additions do not 'overflow' into
+        the next decade</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AM</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..100: unit-additions do not 'overflow' into
+        the next decade, combined decade and unit addition</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AN</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..100: unit-additions DO 'overflow' into the
+        next decade</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AO</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..100: unit-additions DO 'overflow' into the
+        next decade, combined decade and unit addition</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AP</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..100: decades only!</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AQ</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..100: unit-additions do not 'overflow'
+        into the previous decade</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AR</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..100: unit-additions do not 'overflow'
+        into the previous decade, combined decade and unit addition</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AS</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..100: unit-additions DO 'overflow' into
+        the previous decade</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AT</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..100: unit-additions DO 'overflow' into
+        the previous decade, combined decade and unit addition</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>AU</p>
+      </td>
+
+      <td>
+        <p>mixed add/sub in the range 1..100</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MA</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 1</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MB</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 2</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MC</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 5</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MD</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>ME</p>
+      </td>
+
+      <td>
+        <p>mixed tables of multiplication 1, 2, 5, 10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MF</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 3</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MG</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 4</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MH</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 5</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MI</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 6</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MJ</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 7</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MK</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 8</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>ML</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 9</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MM</p>
+      </td>
+
+      <td>
+        <p>mixed tables of multiplication 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MN</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 11</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MO</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 12</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MP</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 13</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MQ</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 17</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MR</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 19</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MS</p>
+      </td>
+
+      <td>
+        <p>mixed tables of multiplication 1..13,17,19</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MT</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 14</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MU</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 15</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MV</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 16</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MW</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 18</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MX</p>
+      </td>
+
+      <td>
+        <p>tables of multiplication: 20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MY</p>
+      </td>
+
+      <td>
+        <p>mixed tables of multiplication 1..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>MZ</p>
+      </td>
+
+      <td>
+        <p>division for divisors in the range 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NA</p>
+      </td>
+
+      <td>
+        <p>division for divisors in the range 1..10; with remainder after
+        division</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NB</p>
+      </td>
+
+      <td>
+        <p>mixed division for divisors in the range 1..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NC</p>
+      </td>
+
+      <td>
+        <p>division for divisors in the range 1..20</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>ND</p>
+      </td>
+
+      <td>
+        <p>division for divisors in the range 1..20; with remainder after
+        division</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NE</p>
+      </td>
+
+      <td>
+        <p>addition in the range 1..1000</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NF</p>
+      </td>
+
+      <td>
+        <p>subtraction in the range 1..1000</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>NG</p>
+      </td>
+
+      <td>
+        <p>mixed add/sub in the range 1..1000</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FA</p>
+      </td>
+
+      <td>
+        <p>fractions: addition, simple fractions</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FB</p>
+      </td>
+
+      <td>
+        <p>fractions: subtraction, simple fractions</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FC</p>
+      </td>
+
+      <td>
+        <p>fractions: multiplication</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FD</p>
+      </td>
+
+      <td>
+        <p>fractions: division</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FE</p>
+      </td>
+
+      <td>
+        <p>fractions: full mix</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FF</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..20 with 0 (zero)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FG</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..20 with negative values up to -10 without
+        carry</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FH</p>
+      </td>
+
+      <td>
+        <p>additions in the range 1..20 with negative values up to -10 with
+        carry</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FI</p>
+      </td>
+
+      <td>
+        <p>additions in the range -10..20 with negative values up to -10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FJ</p>
+      </td>
+
+      <td>
+        <p>additions in the range -10..20 with negative and positive values</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FK</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..20 with negative values up to -10
+        without carry</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FL</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..20 with negative values up to -10 with
+        carry</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FM</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range -10..20 with negative values up to -10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FN</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range -10..20 with negative and positive
+        values</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FO</p>
+      </td>
+
+      <td>
+        <p>mixed additions and subtractions in the range -10..20 with negative
+        and positive values</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <p>FP</p>
+      </td>
+
+      <td>
+        <p>subtractions in the range 1..10 with mandatory carry from 10</p>
+      </td>
+    </tr>
+  </table>
+
+  <p>TBD TBD TBD TBD</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <h2><a name="The_style_commands_ie_Style_Definitions" id=
+  "The_style_commands_ie_Style_Definitions">The style commands
+  (<code>cmd</code>) / Style Definitions</a></h2>
+
+  <p>A style definition is a single line, which defines one particular set of
+  tests and ranges, which will produce the desired exercises.</p>
+
+  <p>A style definition line is a collection of words, each separated by
+  whitespace. Some may have an argument, separated by an '=' assignment
+  character; the '=' may be surrounded by whitespace.</p>
+
+  <p>The first word of a style line is the 'operator' definition, i.e. the type
+  of operation we want exercises to be generated for.</p>
+
+  <p>Here's the list of operators:</p>
+
+  <table>
+    <caption>
+      Available operators
+    </caption>
+
+    <tr>
+      <th>operator</th>
+
+      <th>Short description / Notes</th>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>natural numbers / integer numbers:</p>
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+add
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>addition (+)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+sub
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>subtraction (&minus;)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+mul
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>multiplication (<span class="style1">&times;</span>)&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+div
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>division (<span class="style1">&divide;</span>)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+divmod
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>division with remainder ( <span class="style1">&frasl; )</span></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+mod
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>modulo (remainder after division)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>decimal fractions:</p>
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+fpadd
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>addition (+)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+fpsub
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>subtraction (&minus;)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+fpmul
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>multiplication (<span class="style1">&times;</span>)&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+fpdiv
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>division (<span class="style1">&divide;</span>)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>fractions:</p>
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+fradd
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>addition (+)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+frsub
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>subtraction (&minus;)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+frmul
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>multiplication (<span class="style1">&times;</span>)&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+frdiv
+
+        
+</pre>
+      </td>
+
+      <td>
+        <p>division (<span class="style1">&divide;</span>)</p>
+      </td>
+    </tr>
+  </table>
+
+  <p>Options:</p>
+
+  <table>
+    <caption>
+      Available options
+    </caption>
+
+    <tr>
+      <th>option</th>
+
+      <th>Short description / Notes</th>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>scope: style</p>
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+operand_count=N      
+</pre>
+      </td>
+
+      <td>
+        <p>N is the number of left hand terms to generate. Default is 2.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+left_lower_bound=N
+</pre>
+      </td>
+
+      <td>
+        <p>N is the lowest accepted value for any left hand term (also please
+        note the caveats below for sub/div/...)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+left_upper_bound=N 
+</pre>
+      </td>
+
+      <td>
+        <p>N is the highest accepted value for any left hand term (also please
+        note the caveats below for sub/div/...)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+right_lower_bound=N 
+</pre>
+      </td>
+
+      <td>
+        <p>N is the lowest accepted value for any right hand term (also please
+        note the caveats below for sub/div/...)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+right_upper_bound=N 
+</pre>
+      </td>
+
+      <td>
+        <p>N is the highest accepted value for any right hand term (also please
+        note the caveats below for sub/div/...)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+decimal_tolerance=N 
+</pre>
+      </td>
+
+      <td>
+        <p>Instructs the exercise generator to produce decimal fractions and
+        regular fractions where the denominator is not larger than 1/N</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+lh_low=N
+</pre>
+      </td>
+
+      <td>
+        <p>an alias for left_lower_bound, as that option will be used very
+        often and this is less typing</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+lh_high=N
+</pre>
+      </td>
+
+      <td>
+        <p>an alias for left_upper_bound, as that option will be used very
+        often and this is less typing</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+rh_low=N
+</pre>
+      </td>
+
+      <td>
+        <p>an alias for right_lower_bound, as that option will be used very
+        often and this is less typing</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+rh_high=N
+</pre>
+      </td>
+
+      <td>
+        <p>an alias for right_upper_bound, as that option will be used very
+        often and this is less typing</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+reg
+</pre>
+      </td>
+
+      <td>
+        <p>produce regular exercises, i.e. exercises where the student must
+        calculate the right hand side value(s) for a given left hand side
+        expression</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+dot
+</pre>
+      </td>
+
+      <td>
+        <p>produces alternative exercises, where one of the left hand side
+        terms is replaced by a single dot '.', which' value should be
+        calculated by the student</p>
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>scope: targeted terms (left hand side / right hand side):</p>
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+p1 
+</pre>
+      </td>
+
+      <td>
+        <p>the options which follow this item will apply to the first (left
+        most) term of the left hand side of the expression / exercise</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+p2 
+</pre>
+      </td>
+
+      <td>
+        <p>the options which follow this item will apply to the second term
+        (and any subsequent terms, in case operand_count &gt;= 3) of the left
+        hand side of the expression / exercise</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+px 
+</pre>
+      </td>
+
+      <td>
+        <p>the options which follow this item will apply to <em>any</em> and
+        all terms of the left hand side of the expression / exercise</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+pO 
+</pre>
+      </td>
+
+      <td>
+        <p>the options which follow this item will apply to the <em>right</em>
+        hand side term of the expression / exercise</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+asc 
+</pre>
+      </td>
+
+      <td>
+        <p>order all left hand term values in order of ascending value. For
+        example, <code>2+1=3</code> becomes <code>1+2=3</code></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+desc 
+</pre>
+      </td>
+
+      <td>
+        <p>order all left hand term values in order of descending value.</p>
+
+        <p>&nbsp;For example, <code>1+2=3</code> becomes <code>2+1=3</code></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+0ok 
+</pre>
+      </td>
+
+      <td>
+        <p>the addressed term(s) may have a zero (0) value</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+0notok 
+</pre>
+      </td>
+
+      <td>
+        <p>the addressed term(s) may <em>not</em> have a zero (0) value</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+tens
+</pre>
+      </td>
+
+      <td>values for the addressed term(s) may only be powers of ten</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+units
+</pre>
+      </td>
+
+      <td>values for the addressed term(s)&nbsp; must be unit values, i.e. no
+      decades or higher values are allowed. This means the value is limited to
+      the range -9 ... +9</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+10orU
+</pre>
+      </td>
+
+      <td>values for the addressed term(s)&nbsp; must be either unit values (-9
+      ... +9) <em>or</em> must be decade values, i.e. <span class=
+      "style2">&plusmn;</span>10, <span class="style2">&plusmn;</span>20,
+      <span class="style2">&plusmn;</span>30, ...<br>
+      The decision which it is going to be is based on a random choice per
+      exercise item.</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+10wrap
+</pre>
+      </td>
+
+      <td>the values must wrap/overflow to another decade. For example,
+      <code>7+15=22</code> is fine, but <code>2+18=20</code> and
+      <code>13+6=19</code> are prohibited. Similarly, <code>13-7=6</code> is
+      okayed, yet <code>15-2=13</code> and <code>24-4=20</code> are
+      rejected.</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+no10wrap
+</pre>
+      </td>
+
+      <td>the values may not wrap/overflow to another decade. For example,
+      <code>7+15=22</code> is thus prohibited, but <code>2+18=20</code> and
+      <code>13+6=19</code> are fine. Similarly, <code>13-7=6</code> is
+      prohibited, yet <code>15-2=13</code> and <code>24-4=20</code> are
+      accepted.</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+T<em>n,m,...</em> 
+</pre>
+      </td>
+
+      <td>
+        <p>instruct the generator to use a random value from the list
+        <em>n,m,...</em> for the addressed left hand terms. This option was
+        added to allow the exercise generator to easily support the production
+        of specific 'table of multiplication' exercises, but the use of T is
+        wider than that.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+nomult1 
+</pre>
+      </td>
+
+      <td>
+        <p>do not accept the value one(1) for the addressed left hand terms;
+        originally intended to be used with mul/div to ensure the multiplier,
+        respectively divisor in the second left hand argument would not be
+        one(1), thus producing exercises that are too easy, but the application
+        of this option is wider than that.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+norem0 
+</pre>
+      </td>
+
+      <td>
+        <p>do not accept an answer for div or derivative operations (e.g.
+        divmod and mod) where the remainder after division is zero(0).</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+1denom 
+</pre>
+      </td>
+
+      <td>
+        <p>only permit one common denominator for all fractions</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+1denom_M
+</pre>
+      </td>
+
+      <td>&nbsp;only permit one (common) denominator for all fractions<br>
+      <br>
+      <br>
+      Identical to <code>1denom</code> apart from the fact that it also accepts
+      'non-reduced' fractions with the same denominator, i.e. if the
+      denominator has been set to be '8', the fraction '1/2' is okay too as it
+      can be expressed in 8ths: '4/8'</td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+nofrac1 
+</pre>
+      </td>
+
+      <td>
+        <p>do not accept fraction values which have a denominator of one(1)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+step=<em>N</em>
+</pre>
+      </td>
+
+      <td>
+        <p>calculated values may only be integer values, rounded to a given
+        factor N.<br>
+        <br>
+        Note that ALL float and fraction classes will need this too, where you
+        can force 'nice' answers by using <code>step=1</code> for the answer
+        item (<code>pO</code>).<br></p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+prime_max=<em>N</em>
+</pre>
+      </td>
+
+      <td>
+        <p>when calculated values are converted to fractions, the largest prime
+        value in the denominator may not surpass the value <em>N</em>. This
+        helps to produce 'easy' fractions, i.e. fractions with only low
+        denomination factors, such as 2, 3, 5 or 7.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+redux 
+</pre>
+      </td>
+
+      <td>
+        <p>the fraction for the addressed term(s)&nbsp; MUST be reducible</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+split_frac
+</pre>
+      </td>
+
+      <td>
+        <p>the fraction for the addressed term(s)&nbsp;MUST be split into an
+        integer value and a remaining fraction, e.g. <sup>22</sup>/<sub>7</sub>
+        must be presented as&nbsp; 3<sup>1</sup>/<sub>7</sub></p>
+
+        <p>(Dutch: '<em>helen uithalen</em>')</p>
+      </td>
+    </tr>
+
+    <tr>
+      <th colspan="2">
+        <p>scope: targeted terms (right hand side):</p>
+      </th>
+    </tr>
+
+  </table>
+
+  <p>Caveats &amp; notes:</p>
+
+  <table>
+    <caption>
+      Caveats &amp; notes
+    </caption>
+
+    <tr>
+      <th>Item</th>
+
+      <th>Caveats &amp; notes</th>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <p>Operators:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+add:
+</pre>
+      </td>
+
+      <td>
+        <p>none</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+sub:
+</pre>
+      </td>
+
+      <td>
+        <p>swaps answer with first left hand term</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+mul:
+</pre>
+      </td>
+
+      <td>
+        <p>none</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+div:
+</pre>
+      </td>
+
+      <td>
+        <p>as sub; swaps answer with first left hand term</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+divmod:
+</pre>
+      </td>
+
+      <td>
+        <p>answer is two values: the result after division, plus the
+        remainder</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+mod:
+</pre>
+      </td>
+
+      <td>
+        <p>derived from divmod, but the answer is the remainder only</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        <p>Defined (sub)styles:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+reg 
+</pre>
+      </td>
+
+      <td>
+        <p>regular calculations: answer following the '=' is to be
+        calculated</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+dot 
+</pre>
+      </td>
+
+      <td>
+        <p>'dot sums': in the expression, one operand is replaced by a single
+        '.': the task is now to calculate what value belonged there</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+tens 
+</pre>
+      </td>
+
+      <td>
+        <p>(add/sub) values are all powers of ten</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+dec1 
+</pre>
+      </td>
+
+      <td>
+        <p>(add/sub) first value is a power of ten</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+10sec 
+</pre>
+      </td>
+
+      <td>
+        <p>(add/sub) second and subsequent operands are in the range 0..10</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+no10wrap 
+</pre>
+      </td>
+
+      <td>
+        <p>(add/sub) addition of units for all operands does not surpass 10,
+        i.e. no 'overflow' into another decade</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+nomult1 
+</pre>
+      </td>
+
+      <td>
+        <p>(mult/div) a multiplier of 1 is rejected</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+nodiv1 
+</pre>
+      </td>
+
+      <td>
+        <p>(div) a divisor of 1 is rejected</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+norem0 
+</pre>
+      </td>
+
+      <td>
+        <p>(div with remainder) do prevent the occurrence of a zero remainder,
+        i.e. a non-existing/empty remainder</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+nofrac1 
+</pre>
+      </td>
+
+      <td>
+        <p>(fraction calculus) do not accept a divisor of 1 for any
+        fraction</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+units:
+</pre>
+      </td>
+
+      <td>
+        <p>this attribute discards adherence to the lower and upper bound
+        limitations for the terms it applies to. If it wouldn't lift those two
+        restraints on the value, the 'unit' option would not be able to work
+        for any exercises where you wish to combine unit-valued terms with
+        higher numbers for other left hand terms.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+asc, desc:
+</pre>
+      </td>
+
+      <td>
+        <p>subtraction, division and hence any of their derivatives are not
+        commutative, so (re-)ordering left hand term values using asc/desc will
+        very probably have disastrous results, most often leading to rejection
+        of an increasing number of attempts to produce a valid exercise. We
+        strongly urge you not to use these two options with sub, div or any
+        operation derived thereof.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+T
+</pre>
+      </td>
+
+      <td>
+        <p>The 'T' tables of multiplication subsetting lists the mandatory
+        tables of multiplication as numbers, separated by ','.</p>
+      </td>
+    </tr>
+  </table>
+
+  <h2>Page Configuration Options:</h2>
+
+  <h1>TO BE COMPLETED</h1>
+
+  <p>yada yada yada</p>
+
+  <p>&nbsp;</p>
+
+  <table>
+    <caption>
+      Page options and other bits &amp; pieces
+    </caption>
+
+    <tr>
+      <th>Item</th>
+
+      <th>Default</th>
+
+      <th>Short description</th>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Lower bound for left side values:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+in_lb
+</pre>
+      </td>
+
+      <td>
+        <pre>
+ 1
+</pre>
+      </td>
+
+      <td>
+        <p>(any value below or equal the left side upper bound)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Upper bound for left side values:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+in_ub
+</pre>
+      </td>
+
+      <td>
+        <pre>
+ 20
+</pre>
+      </td>
+
+      <td>
+        <p>(any value above or equal the left side lower bound)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Lower bound for right side value:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+out_lb
+</pre>
+      </td>
+
+      <td>
+        <pre>
+ 1
+</pre>
+      </td>
+
+      <td>
+        <p>(any value below or equal the right side upper bound)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Upper Bound for right side value:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+out_ub
+</pre>
+      </td>
+
+      <td>
+        <pre>
+ 20
+</pre>
+      </td>
+
+      <td>
+        <p>(any value above or equal the right side lower bound)</p>
+
+        <p>Which styles? (no spaces, 'reg' is regular (e.g. '4 + 3 ='), 'dot'
+        are 'dotted' exercises (e.g. '. + 3 = 7'))</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Lower bound on number of left side operands (2 or more)</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+oc_lb 
+</pre>
+      </td>
+
+      <td>
+        <p>2</p>
+      </td>
+
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Upper bound on number of left side operands</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+oc_ub 
+</pre>
+      </td>
+
+      <td>
+        <p>2</p>
+      </td>
+
+      <td></td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Fraction precision</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+frac_prec 
+</pre>
+      </td>
+
+      <td>
+        <p>0.1</p>
+      </td>
+
+      <td>
+        <p>Decimal fraction which determines the size of the fraction
+        denominators and number of decimals in decimal fractions.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Number of exercises to create:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+ex_cnt 
+</pre>
+      </td>
+
+      <td>
+        <p>64</p>
+      </td>
+
+      <td>
+        <p>The effective number of exercises produced MAY be less than this
+        number, when the generator cannot produce more.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Display Columns:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+cols 
+</pre>
+      </td>
+
+      <td>
+        <p>4</p>
+      </td>
+
+      <td>
+        <p>&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Show Exercises:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+show_ex 
+</pre>
+      </td>
+
+      <td>
+        <p>on</p>
+      </td>
+
+      <td>
+        <p>Print exercises for use by student</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>Show Answer Sheet:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+show_ans 
+</pre>
+      </td>
+
+      <td>
+        <p>on</p>
+      </td>
+
+      <td>
+        <p>Print corresponding answer section for exercise validation by
+        teacher or student (self-check).</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        <p>...:</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+description:
+</pre>
+        <pre>
+description.<em>language</em>:
+</pre>
+      </td>
+
+      <td>
+        <p>-</p>
+      </td>
+
+      <td>
+        <p>Provide a (part of the) description to be included with the
+        generated exercise sheet.</p>
+
+        <p>A description may consist of multiple lines of text.</p>
+
+        <p>The description text is terminated by a line containing one
+        character, which must be either of these:</p>
+
+        <ul>
+          <li>
+            <pre>
++
+</pre>
+
+            <p>Append this text to the description.</p>
+          </li>
+
+          <li>
+            <pre>
+=
+</pre>
+
+            <p>Overwrite (remove) an already existing description text: this
+            description informs us we should ditch the already existing bits of
+            description.</p>
+          </li>
+        </ul>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+language:
+      
+</pre>
+      </td>
+
+      <td>
+        <p><code>en</code>&nbsp;</p>
+      </td>
+
+      <td>
+        <p>Set the language ('<code>en</code>', '<code>nl</code>', etc.) to use
+        for the descriptions: depending on the language setting, the
+        appropriate description is used. When no language-specific
+        <code>description.language:</code> is available, the default
+        <code>description:</code> is used instead.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+debug:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>0</p>
+      </td>
+
+      <td>
+        <p>set debug / diagnostics level. Use to diagnose issues with the
+        generated exercises and/or configuration input.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+chapter:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>-</p>
+      </td>
+
+      <td>
+        <p>&nbsp;&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+chapter_format:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>-</p>
+      </td>
+
+      <td>
+        <p>&nbsp;</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+preset:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>-</p>
+      </td>
+
+      <td>
+        <p>we need to replace preset request with 'the real thing'.</p>
+
+        <p>as we want to support nested presets, PLUS we wish later lines to
+        have precedence over earlier items, we'll need to 'shift' the array of
+        lines down when inserting the preset data...</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+styles_def_start:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>-</p>
+      </td>
+
+      <td>
+        <p>mark the start of a preset section: skip until end marker.</p>
+
+        <p>Note that preset definition sections cannot be nested!</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+exercise_count:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>64</p>
+      </td>
+
+      <td>
+        <p>Number of exercises to be generated. The default 64 results in 16
+        exercises per column at a 4 column default.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+operator_count:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>1</p>
+      </td>
+
+      <td>
+        <p>Number of operators in the exercises.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+display_columns:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>4</p>
+      </td>
+
+      <td>
+        <p>Number of columns to use to display/print the generated
+        exercises.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+display_exercises:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>on</p>
+      </td>
+
+      <td>
+        <p>show the generated exercises on the generated page. This happens by
+        default.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+display_answers:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>on</p>
+      </td>
+
+      <td>
+        <p>print the exercise answers as an additional part of the generated
+        exercise sheet. When printing the sheet, this section will be printed
+        on a separate page, so teachers can keep the answer sheet, while
+        distributing the exercise sheet among their students.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+display_statistics:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>off</p>
+      </td>
+
+      <td>
+        <p>show the internal statistics of the exercise generator as part of
+        the produced exercise sheet.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+display_command_copy:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>off</p>
+      </td>
+
+      <td>
+        <p>show the command input as part of the generated exercise sheet.
+        Useful to remember and/or regenerate these exact exercises at a later
+        date.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+shuffled_repeat_count:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>0</p>
+      </td>
+
+      <td>
+        <p>how often a particular exercise may recur in the output. Usually
+        each exercise will only occur just once (0), but you may specify a
+        higher number, which is useful when you are generating exercise styles
+        which only produce a very limited number of possible exercises, e.g.
+        sums from 1..5. However, smart students with large short term memory
+        will recognize 'this one occurred before' and just copy the answers
+        from a previous column.</p>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <pre>
+try_single_limit:
+      
+</pre>
+      </td>
+
+      <td>
+        <p>40</p>
+      </td>
+
+      <td>
+        <p>Number of trial rounds used to generate one exercise. Increase this
+        value to allow the generator to produce more exercises for styles which
+        are hard to create using the random-based approach used by this
+        generator. High numbers for this setting will, however, significantly
+        slow down the exercise page generation.</p>
+      </td>
+    </tr>
+  </table>
+      
+      <p></p>
+    </form>
+  </fieldset>
+</body>
+</html>

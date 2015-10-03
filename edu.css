@@ -1,0 +1,854 @@
+/***********************************************/
+/* x                                           */
+/***********************************************/
+/***********************************************/
+/* You'll need these 6 lines for Dreamweaver   */
+/***********************************************/ 
+
+/*
+ * Style sheet for the HTML 4.0 specification
+ *
+ * by Gerrit E.G. 'Insh_Allah' Hobbelt
+ */
+
+/*
+ * Netscape 'forgets' quite a few things (textcolor, etc.) when outside a <span> block:
+ * it looks like NE4 doesn't support <span> within <span>: as soon as the first </span> arrives
+ * everything is apparently reset to default (which is BLACK text) :-( bloody morons.
+ *
+ * Then there's the problem with NE4.5 and beyond: those happen not to understand the
+ * 'font-size' element but require 'fontsize' instead.
+ *
+ * Opera 3.60 doesn't seem to grasp the <span class="xxxx"> tag _outside_ <p>...</p> blocks.
+ * So .FinePrint should be implemented as <p class=FinePrint>...</p> to make 'em happy :-(
+ */
+
+
+html
+{
+    color: rgb(0,0,0);                  /* #FFFF00 */
+
+    background-color: #eaf9fd;
+
+    /*
+     font-family: Calibri, Verdana, Georgia, "Trebuchet MS", Lucida Sans, Arial, Helvetica, sans-serif;
+    */
+    font-family: Georgia, "Times New Roman", Times, serif;
+    font-size: 1.0em;    /* 1.1em / 1.2em looks really UGLY on UNIX/Firefox, while looking good on Windows :-( */
+    /* font-size: 1.5em; */
+
+    text-align: left;
+}
+
+
+
+/*
+ from outside to inside:
+
+ margin > border > padding
+ */
+body
+{
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+
+    /*
+    border-top:    1px #136FD2 solid;
+    border-bottom: 1px #136FD2 solid;
+    border-left:   1px #136FD2 solid;
+    border-right:  1px #136FD2 solid;
+    */
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+img
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    border-top:    0;
+    border-bottom: 0;
+    border-left:   0;
+    border-right:  0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+p
+{
+    /* text-align: justify; */
+    text-align: left; 
+    text-align-last: left;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+ul
+{
+    list-style: disc;
+
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+
+    border-top:    0;
+    border-bottom: 0;
+    border-left:   0;
+    border-right:  0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+ol
+{
+    list-style: upper-alpha outside;
+
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+
+    border-top:    0;
+    border-bottom: 0;
+    border-left:   0;
+    border-right:  0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+ol ol
+{
+    list-style: decimal outside;
+}
+
+/*
+   http://www.w3schools.com/Css/css_pseudo_classes.asp
+   
+   order is important, see section on a. speudo classes
+ */
+a:link
+{
+    color: #5E0CCB;
+    text-decoration: none;
+    background-color: transparent;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+a:visited
+{
+    color: #064891;
+    text-decoration: none;
+    background-color: transparent;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+a:hover
+{
+    color: #8B04D5;
+    text-decoration: none;
+    background-color: transparent;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    outline: #FAFF9D solid 1px;
+}
+
+a:active
+{
+    color: #A70359;
+    text-decoration: none;
+    background-color: transparent;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+em
+{
+    font-style: italic;
+}
+
+strong
+{
+    font-weight: bold;
+}
+
+small
+{
+    font-size: 90%;
+}
+
+sup
+{
+    font-size: 90%;
+    vertical-align: super;
+}
+
+sub
+{
+    font-size: 90%;
+    vertical-align: sub;
+}
+
+h1
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 200%;
+
+    text-align: center;
+
+    padding-top: 0.1em;
+    border-top:    2px #1579E8 solid;
+    padding-bottom: 0.1em;
+    border-bottom:    2px #1579E8 solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+h2
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 180%;
+
+    text-align: center;
+
+    padding-bottom: 0.1em;
+    border-bottom:    2px #69AAF1 solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+h3
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 160%;
+
+    text-align: center;
+
+    padding-bottom: 0.1em;
+    border-bottom:    1px #75D1F4 solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+h4
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 140%;
+
+    text-align: center;
+    
+    padding-bottom: 0.1em;
+    border-bottom:    1px #EBF9FE solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+h5
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 120%;
+
+    text-align: center;
+    
+    padding-bottom: 0.1em;
+    border-bottom:    1px #EBF9FE solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+h6
+{
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    font-size: 120%;
+
+    text-align: center;
+    
+    padding-bottom: 0.1em;
+    border-bottom:    1px #EBF9FE solid;
+
+    margin-top: 0.6em;
+    margin-bottom: 0.3em;
+}
+
+
+
+/*
+ from outside to inside:
+
+ margin > border > padding
+ 
+ IE6 does not render 'border-collapse: separate' like FireFox (white between the two lines)
+ and IE6 does not handle border-spacing, so we can only fix this (I checked and looked, yeah)
+ by adding 'cellspacing=0' to the <table> tag itself.
+ */
+table
+{
+    border-top:    1px #69AAF1 solid;
+    border-bottom: 1px #136FD2 solid;
+    border-left:   1px #136FD2 solid;
+    border-right:  1px #69AAF1 solid;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0;
+    margin-right: 0;
+
+    border-collapse: separate;
+    border-spacing: 0px;
+    border-break: solid;
+
+    /* width: 100%; -- IE6 takes this as 100% of the page width :-S */
+}
+
+/*
+ from outside to inside:
+
+ margin > border > padding
+ */
+
+td, th
+{
+    vertical-align: top;
+
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 3px;
+    margin-right: 3px;
+    border-top:    2px #136FD2 solid;
+    border-bottom: 2px #69AAF1 solid;
+    border-left:   2px #69AAF1 solid;
+    border-right:  2px #136FD2 solid;
+    padding-top: 0.0em;
+    padding-bottom: 0.0em;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+}
+
+/*
+td p, th p
+{
+    margin-left: 1.5em;
+    margin-right: 1.5em;
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+
+    border-top:    1px black solid;
+    border-bottom: 1px black solid;
+    border-left:   1px black solid;
+    border-right:  1px black solid;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+*/
+
+th p
+{
+    text-align: left;              /* justify ? */
+    font-size: 110%;
+    font-weight: bold;
+}
+
+
+/* opera 3.50 */
+dd
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+dt
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+pre
+{
+    background-color: #FDFBF7;
+    border-left: 3px #0051E8 solid;
+    border-bottom: 1px #0051E8 solid;
+    border-top: 1px #000066 solid;
+    border-right: 1px #000066 solid;
+
+    margin: 0.3em 2em 0.3em 2em;
+    padding: 0.2em 0.2em 0.2em 0.5em;
+
+    font-family: Consolas, "Lucida Console", "Courier New", Courier, monospace;
+    font-size: 0.85em;
+}
+
+
+code
+{
+    background-color: #FDFBF7;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+
+    font-family: Consolas, "Lucida Console", "Courier New", Courier, monospace;
+}
+
+
+blockquote
+{
+    background-color: #D0F2FB;
+
+    border-top:    1px #337DEE solid;
+    border-bottom: 1px #337DEE solid;
+    border-left:   1px #337DEE solid;
+    border-right:  1px #337DEE solid;
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+
+/*
+* I'm using hardcoded point sizes here instead of 'xx-small' etc. as Netscape & IE render
+* these names at different point sizes. Netscape renders xx-small too small to be readable anyhow. :-(
+*/
+
+.CenteredFinePrint
+{
+    font-size: 80%;
+}
+
+.SmallPrint
+{
+    font-size: 80%;
+}
+
+.FinePrint
+{
+    font-size: 80%;
+}
+
+.CenteredNormalPrint
+{
+    text-align: center;
+}
+
+.CenteredLargePrint
+{
+    text-align: center;
+}
+
+.CenteredLouderPrint
+{
+    text-align: center;
+}
+
+.CenteredLittleLouderPrint
+{
+    text-align: center;
+}
+
+.CenteredFinePrint
+{
+    text-align: center;
+}
+
+.CenteredLargePrint
+{
+    font-size: 160%;
+}
+
+.LargePrint
+{
+    font-size: 160%;
+}
+
+.CenteredNormalPrint
+{
+    font-size: 100%;
+}
+
+.NormalPrint
+{
+    font-size: 100%;
+}
+
+.CenteredLouderPrint
+{
+    font-size: 120%;
+}
+
+.CenteredLittleLouderPrint
+{
+    font-size: 110%;
+}
+
+.LouderPrint
+{
+    font-size: 120%;
+}
+
+.LittleLouderPrint
+{
+    font-size: 110%;
+}
+
+.LabelPrint
+{
+    font-size: 140%;
+}
+
+.IsConstructedBy
+{
+    font-size: 120%;
+}
+
+.IsWrittenBy
+{
+    font-size: 120%;
+    text-align: center;
+    font-style: italic;
+}
+
+.left
+{
+    text-align: left;
+}
+
+.center
+{
+    text-align: center;
+}
+
+/*
+ * [i_a] IE4 doesn't support 'justify' it seems... so we introduce different definitions:
+ * each browser will take what it can handle.
+ *
+ * </P> tag should be located following an additional 'space' to prevent 'justify'
+ * from justifying the last line too :-( Same applies for </td> et al.
+ */
+.just
+{
+    /* for those that do not know 'justify' */
+    text-align: left;
+}
+
+.just
+{
+    text-align: justify;
+    text-align-last: left;
+}
+
+.RedCode
+{
+    color: #FF3300;
+}
+
+.OrangeCode
+{
+    color: #D76800;
+}
+
+.GreenCode
+{
+    color: #007D00;
+}
+
+.nowrap
+{
+    white-space:nowrap;
+}
+
+.hanging
+{
+    /* text-align: start; */
+    text-indent: -0.6em;
+    padding-left: 0.6em;
+}    
+
+
+.hanging
+{
+    /* text-align: start; */
+    text-indent: 0.6em hanging;
+}
+
+
+.Copyright
+{
+    font-size: 80%;
+    text-align: center;
+
+    border-top: 2px #0B4286 solid;
+    border-bottom: 0;
+    border-left:   0;
+    border-right:  0;
+
+    padding-top: 0.2em;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+    
+    margin-top: 1.0em;
+    margin-bottom: 0.1em;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.signed 
+{
+    font-size: 110%;
+    font-style: italic;
+    text-align: right;
+}
+
+.quoted_email
+{
+    /* font-style: italic; */
+    text-align: left;
+    color: #060d30;
+
+    background-color: #d3f5fe;
+
+    border-top:    1px #739dc4 solid;
+    border-bottom: 1px #739dc4 solid;
+    border-left:   1px #739dc4 solid;
+    border-right:  1px #739dc4 solid;
+
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: 0.2em;
+    margin-right: 0.2em;
+}
+
+
+
+
+th.sum_index, td.sum_index
+{
+    width: 1%;
+    font-size: 8pt;
+    border: 1px #00006F solid;
+}
+th.sum_index p, td.sum_index p
+{
+    width: 1%;
+    font-size: 8pt;
+    color: gray;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0.6em;
+    padding-bottom: 0.1em;
+    padding-left: 0;
+    padding-right: 0;
+}
+th.sum_header, td.sum
+{
+    border: 1px #00006F dotted;
+}
+th.sum_header p
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+td.sum p
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 0;
+    padding-right: 0;
+}
+table.sums
+{
+    border: 3px #00006F solid;
+    border-collapse: collapse;
+}
+tr.sums_header
+{
+    border: 2px #00006F solid;
+    background-color: white;
+}
+tr.sum_line_odd td
+{
+    background-color: #F8F8FF; 
+}
+tr.sum_line_even td
+{
+    background-color: white;
+}
+.sum, .answer
+{
+    /*
+     font-family: Calibri, Verdana, Georgia, "Trebuchet MS", Lucida Sans, Arial, Helvetica, sans-serif;
+     font-family: Georgia, "Times New Roman", Times, serif;
+    */
+    font-family: Calibri, Verdana, "Trebuchet MS", Lucida Sans, "Lucida Console", "Courier New", Courier, monospace;
+}
+
+
+th.answer_index, td.answer_index
+{
+    width: 1%;
+    font-size: 8pt;
+    border: 1px #6F0000 solid;
+}
+th.answer_index p, td.answer_index p
+{
+    width: 1%;
+    font-size: 8pt;
+    color: gray;
+
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0.6em;
+    padding-bottom: 0.1em;
+    padding-left: 0;
+    padding-right: 0;
+}
+th.answer_header, td.answer
+{
+    border: 1px #6F0000 dotted;
+}
+th.answer_header p
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0;
+}
+td.answer p
+{
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    padding-left: 0;
+    padding-right: 0;
+}
+table.answers
+{
+    border: 3px #6F0000 solid;
+    border-collapse: collapse;
+}
+tr.answers_header
+{
+    border: 2px #6F0000 solid;
+    background-color: white;
+}
+tr.answer_line_odd td
+{
+    background-color: #FFF8F8; 
+}
+tr.answer_line_even td
+{
+    background-color: white;
+}
+
+hr
+{
+    margin-top: .5em;
+    margin-bottom: .5em;
+    margin-left: 0;
+    margin-right: 0;
+
+    border:    1px #1579E8 solid;
+    color: #1579E8; 
+}
+
+hr.sum_n_answer_separator
+{
+    margin-top: .1em;
+    margin-bottom: .1em;
+    margin-left: 0;
+    margin-right: 0;
+
+    border: 0px;
+    color: #eaf9fd; /* 'invisible' as color == background */
+}
+
+hr.sum_n_answer_separator
+{
+    /* 
+       see also:
+       
+       http://www.westciv.com/style_master/academy/css_tutorial/advanced/printing.html
+       
+       http://www.blooberry.com/indexdot/css/properties/print/pbafter.htm
+     */
+    page-break-after: always;
+}

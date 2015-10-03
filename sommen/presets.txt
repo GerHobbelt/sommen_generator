@@ -1,0 +1,1164 @@
+#
+# collection of presets.
+#
+# Format:
+#
+# NNN       - 2 or 3 character preset identifier.
+#
+# ...       - zero or more lines to be copied into the configuration; each line is one 'style', just
+#             like you would have to do for a custom configuration file
+#
+# ---       - three '-' dashes terminate a preset section. Anything up to these dashes is copied into
+#             the config output.
+#
+
+
+
+
+AA
+
+description.nl:
+eenvoudige optellingen voor 1..5
++
+description:
+simple additions in the range 1..5
++
+
+add  lh_low=1  lh_high=4  rh_low=1  rh_high=5  
+
+---
+
+
+
+AB
+
+description.nl:
+optellen voor 1..10
++
+description:
+simple additions in the range 1..10
++
+
+add  lh_low=1  lh_high=10  rh_low=1  rh_high=10 
+
+---
+
+
+
+AC
+
+description.nl:
+aftrekken voor 1..10
++
+description:
+subtractions in the range 1..10
++
+
+sub  lh_low=1  lh_high=10  rh_low=1  rh_high=10 
+
+---
+
+
+
+AD
+
+description.nl:
+gemengd optellen en aftrekken voor 1..10
++
+description:
+mixed add/sub in range 1..10
++
+
+add  lh_low=1  lh_high=10  rh_low=1  rh_high=10 
+sub  lh_low=1  lh_high=10  rh_low=1  rh_high=10 
+
+
+---
+
+
+
+AE
+
+description.nl:
+optellen voor 15..19
++
+description:
+additions in the range 15..19
++
+
+
+add lh_low=10 lh_high=19 rh_low=15 rh_high=19   p1  0notok  tens  p2 units   no10wrap
+add lh_low=10 lh_high=18 rh_low=15 rh_high=19   p2  0notok  units  no10wrap
+
+
+
+---
+
+
+
+
+AF
+
+description.nl:
+optellen voor 11..20
++
+description:
+additions in the range 11..20
++
+
+
+add  lh_low=10  lh_high=19  rh_low=11  rh_high=20   p2  0notok  units  no10wrap
+
+
+---
+
+
+
+AG
+
+description.nl:
+aftrekken voor 11..20
++
+description:
+subtractions in the range 11..20
++
+
+sub  lh_low=10  lh_high=19  rh_low=11  rh_high=20   p2  0notok  units  no10wrap
+
+
+---
+
+
+
+AH
+
+description.nl:
+optellen voor 1..20 met 1 onthouden
++
+description:
+additions in the range 1..20 with carry
++
+
+add  lh_low=1  lh_high=19  rh_low=1  rh_high=20   p2  0notok  units  10wrap 
+
+---
+
+
+
+AI
+
+description.nl:
+aftrekken voor 1..20 met lenen
++
+description:
+subtractions in the range 1..20 with carry
++
+
+sub  lh_low=1  lh_high=20  rh_low=1  rh_high=20   p2  0notok  units  10wrap
+
+---
+
+
+
+AJ
+
+description.nl:
+gemengd optellen en aftrekken voor 1..20
++
+description:
+mixed add/sub in the range 1..20
++
+
+
+add  lh_low=1  lh_high=19  rh_low=1  rh_high=20   p2  0notok  units  
+sub  lh_low=1  lh_high=20  rh_low=1  rh_high=20   p2  0notok  units  
+
+
+---
+
+
+
+AK
+
+
+description.nl:
+optellen voor 1..100 (alleen tientallen!)
++
+description:
+additions in the range 1..100: decades only!
++
+
+
+add  lh_low=10  lh_high=90  rh_low=1  rh_high=100   px  0notok  tens
+  
+
+---
+
+
+
+AL
+
+description.nl:
+optellen voor 1..100 zonder onthouden (binnen het tiental en de eerste term is altijd een tiental)
++
+description:
+additions in the range 1..100: unit-additions do not &#39;overflow&#39; into the next decade
++
+
+add  lh_low=10  lh_high=90  rh_low=1  rh_high=100   p1  0notok  tens   p2  0notok  units   no10wrap
+
+---
+
+
+
+AM
+
+description.nl:
+optellen voor 1..100 zonder onthouden (binnen het tiental)
++
+description:
+additions in the range 1..100: unit-additions do not &#39;overflow&#39; into the next decade, combined decade and unit addition
++
+
+
+
+add  lh_low=10  lh_high=99  rh_low=1  rh_high=100   p1  0notok       p2  0notok  units   no10wrap
+
+
+---
+
+
+
+AN
+
+description.nl:
+optellen voor 1..100 met onthouden (tweede term is altijd een eenheid, dus zonder extra tiental)
++
+description:
+additions in the range 1..100: unit-additions DO &#39;overflow&#39; into the next decade
++
+
+
+add  lh_low=10  lh_high=99  rh_low=1  rh_high=100   p1  0notok       p2  0notok  units  10wrap
+
+
+---
+
+
+
+AO
+
+description.nl:
+optellen voor 1..100 met onthouden
++
+description:
+additions in the range 1..100: unit-additions DO &#39;overflow&#39; into the next decade, combined decade and unit addition
++
+
+
+add  lh_low=10  lh_high=99  rh_low=1  rh_high=100  10wrap   
+
+---
+
+
+
+AO2
+
+description.nl:
+optellen voor 1..100
++
+description:
+additions in the range 1..100
++
+
+
+add  lh_low=10  lh_high=99  rh_low=1  rh_high=100
+
+---
+
+
+
+AP
+
+description.nl:
+aftrekken voor 1..100 (alleen tientallen)
++
+description:
+subtractions in the range 1..100: decades only!
++
+
+try_single_limit: 100
+
+
+sub  lh_low=10  lh_high=99  rh_low=10  rh_high=100   px tens    0notok
+
+
+---
+
+
+
+AQ
+
+description:
+subtractions in the range 1..100: unit-additions do not &#39;overflow&#39; into the previous decade
++
+
+
+
+# make sure no10wrap follows 'units' so the rescaling done by 'units' is picked up by the speed improvement 
+# (through re-rescaling of the units values) inside 'no10wrap'.
+#
+# Basically, 'no10wrap' works best when it comes last. :-)
+
+sub  lh_low=10  lh_high=99  rh_low=10  rh_high=100       0notok  no10wrap   p2 units   no10wrap 
+
+---
+
+
+
+AR
+
+description:
+subtractions in the range 1..100: unit-additions do not &#39;overflow&#39; into the previous decade, combined decade and unit addition
++
+
+
+sub  lh_low=10  lh_high=99  rh_low=10  rh_high=100       0notok  no10wrap
+
+---
+
+
+
+AS
+
+description:
+subtractions in the range 1..100: unit-additions DO &#39;overflow&#39; into the previous decade
++
+
+
+sub  lh_low=10  lh_high=100  rh_low=10  rh_high=100       0notok     p2 units   10wrap
+
+---
+
+
+
+AT
+
+description:
+subtractions in the range 1..100: unit-additions DO &#39;overflow&#39; into the previous decade, combined decade and unit addition
++
+
+
+sub  lh_low=1  lh_high=100  rh_low=1  rh_high=100       10wrap
+
+
+---
+
+
+
+AU
+
+description:
+mixed add/sub in the range 1..100
++
+
+
+add  lh_low=1  lh_high=99  rh_low=1  rh_high=100       
+sub  lh_low=1  lh_high=100  rh_low=1  rh_high=100       
+
+
+---
+
+
+
+AV
+
+description:
+addition with mandatory carry, adding a unit value (1..9) only, in the range 10..100
++
+
+add lh_low=10 lh_high=100 rh_low=10 rh_high=100  p2 0notok units 10wrap 
+
+---
+
+
+
+AW
+
+description:
+subtraction with mandatory carry, adding a unit value (1..9) only, in the range 10..100
++
+
+sub lh_low=10 lh_high=100 rh_low=10 rh_high=100  p2 0notok units 10wrap 
+
+---
+
+
+
+
+MA
+
+description:
+tables of multiplication: 1
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T1 
+
+---
+
+
+
+MB
+
+description:
+tables of multiplication: 2
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T2
+
+---
+
+
+
+MC
+
+description:
+tables of multiplication: 5
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T5
+
+---
+
+
+
+MD
+
+description:
+tables of multiplication: 10
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T10 
+
+---
+
+
+
+ME
+
+description:
+mixed tables of multiplication 1, 2, 5, 10
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T1,2,5,10 
+
+---
+
+
+
+MF
+
+description:
+tables of multiplication: 3
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T3
+
+---
+
+
+
+MG
+
+description:
+tables of multiplication: 4
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T4
+
+---
+
+
+
+MH
+
+description:
+tables of multiplication: 5
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T5
+
+---
+
+
+
+MI
+
+description:
+tables of multiplication: 6
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T6
+
+---
+
+
+
+MJ
+
+description:
+tables of multiplication: 7
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T7
+
+---
+
+
+
+MK
+
+description:
+tables of multiplication: 8
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T8
+
+---
+
+
+
+ML
+
+description:
+tables of multiplication: 9
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T9
+
+---
+
+
+
+MM
+
+description:
+mixed tables of multiplication 1..10
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T1,2,3,4,5,6,7,8,9,10
+
+---
+
+
+
+MN
+
+description:
+tables of multiplication: 11
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T11
+
+---
+
+
+
+MO
+
+description:
+tables of multiplication: 12
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T12
+
+
+---
+
+
+
+MP
+
+description:
+tables of multiplication: 13
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T13
+
+
+---
+
+
+
+MQ
+
+description:
+tables of multiplication: 17
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T17
+
+
+---
+
+
+
+MR
+
+description:
+tables of multiplication: 19
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T19
+
+
+---
+
+
+
+MS
+
+description:
+mixed tables of multiplication 1..13,17,19
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T1,2,3,4,5,6,7,8,9,10,11,12,13,17,19
+
+
+---
+
+
+
+MT
+
+description:
+tables of multiplication: 14
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T14
+
+
+---
+
+
+
+MU
+
+description:
+tables of multiplication: 15
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T15
+
+---
+
+
+
+MV
+
+description:
+tables of multiplication: 16
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T16
+
+
+---
+
+
+
+MW
+
+description:
+tables of multiplication: 18
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T18
+
+
+---
+
+
+
+MX
+
+description:
+tables of multiplication: 20
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T20
+
+
+---
+
+
+
+MY
+
+description:
+mixed tables of multiplication 1..20
++
+
+
+mul  lh_low=1  lh_high=10  rh_low=1  rh_high=500       p1  T1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20
+
+
+---
+
+
+
+MZ
+
+description:
+division for divisors in the range 1..10
++
+
+
+div  lh_low=1  lh_high=10  rh_low=1  rh_high=100       
+
+---
+
+
+
+NA
+
+description:
+division for divisors in the range 1..10; with remainder after division
++
+
+
+divmod  lh_low=1  lh_high=10  rh_low=1  rh_high=100       norem0
+
+---
+
+
+
+NB
+
+description:
+mixed division for divisors in the range 1..10
++
+
+
+divmod  lh_low=1  lh_high=10  rh_low=1  rh_high=100       
+
+---
+
+
+
+NC
+
+description:
+division for divisors in the range 1..20
++
+
+
+div  lh_low=1  lh_high=20  rh_low=1  rh_high=100       
+
+---
+
+
+
+ND
+
+description:
+division for divisors in the range 1..20; with remainder after division
++
+
+
+divmod  lh_low=1  lh_high=20  rh_low=1  rh_high=100       norem0
+
+---
+
+
+
+NE
+
+description:
+addition in the range 1..1000
++
+
+
+add  lh_low=1  lh_high=1000  rh_low=1  rh_high=1000     0notok
+
+---
+
+
+
+NF
+
+description:
+subtraction in the range 1..1000
++
+
+
+sub  lh_low=1  lh_high=1000  rh_low=1  rh_high=1000     0notok
+
+---
+
+
+
+NG
+
+description:
+mixed add/sub in the range 1..1000
++
+
+
+add  lh_low=1  lh_high=1000  rh_low=1  rh_high=1000     0notok
+sub  lh_low=1  lh_high=1000  rh_low=1  rh_high=1000     0notok
+
+
+---
+
+
+
+FA
+
+description:
+fractions: addition, simple fractions
++
+
+
+fradd  lh_low=0.1  lh_high=1  rh_low=0.1  rh_high=1   decimal_tolerance=0.1     0notok   1denom   nofrac1  
+
+---
+
+
+
+FB
+
+description:
+fractions: subtraction, simple fractions
++
+
+
+frsub  lh_low=0.1  lh_high=1  rh_low=0.1  rh_high=1   decimal_tolerance=0.1     0notok   nofrac1  
+
+---
+
+
+
+FC
+
+description:
+fractions: multiplication
++
+
+
+frmul  lh_low=0.1  lh_high=1  rh_low=0.1  rh_high=1   decimal_tolerance=0.1     0notok   1denom   nofrac1  
+
+---
+
+
+
+FD
+
+description:
+fractions: division
++
+
+
+frdiv  lh_low=0.1  lh_high=1  rh_low=0.1  rh_high=1   decimal_tolerance=0.1     0notok   1denom   nofrac1  
+
+
+---
+
+
+
+FE
+
+description:
+fractions: full mix
++
+
+
+fradd  lh_low=0.1  lh_high=5  rh_low=0.1  rh_high=5   decimal_tolerance=0.1    0notok      p2  nofrac1  
+frsub  lh_low=0.1  lh_high=5  rh_low=0.1  rh_high=5   decimal_tolerance=0.1    0notok      p2  nofrac1  
+frmul  lh_low=0.1  lh_high=5  rh_low=0.1  rh_high=5   decimal_tolerance=0.1    0notok      p2  nofrac1  
+frdiv  lh_low=0.1  lh_high=5  rh_low=0.1  rh_high=5   decimal_tolerance=0.1    0notok      p2  nofrac1  
+
+---
+
+
+
+
+FF
+
+description.nl:
+optellen voor 1..20 met 0 (nul)
++
+description:
+additions in the range 1..20 with 0 (zero)
++
+
+# Take care: p1 parameters 'seep through' into p2 and further positions, unless you specifically NEGATE
+# such options. It's an artifact of the current code, which I don't bother to fix.
+# That's why this one won't produce any results unless you throw in that '0ok' after the 'p2' as well.
+
+add  lh_low=1  lh_high=20  rh_low=1  rh_high=20   p1  0notok    p2 0ok lh_low=0  lh_high=0
+
+---
+
+
+
+
+FG
+
+description.nl:
+optellen voor 1..20 met negatieve getallen tot -10 zonder onthouden
++
+description:
+additions in the range 1..20 with negative values up to -10 without carry
++
+
+add  lh_low=1  lh_high=20  rh_low=-10  rh_high=20   p1  0notok    p2 0notok lh_low=-9  lh_high=-1 no10wrap
+
+---
+
+
+
+
+FH
+
+description.nl:
+optellen voor 1..20 met negatieve getallen tot -10 met onthouden
++
+description:
+additions in the range 1..20 with negative values up to -10 with carry
++
+
+add  lh_low=1  lh_high=20  rh_low=-10  rh_high=20   p1  0notok    p2 0notok lh_low=-10  lh_high=-1 10wrap
+
+---
+
+
+
+
+FI
+
+description.nl:
+optellen voor -10..20 met negatieve getallen tot -10
++
+description:
+additions in the range -10..20 with negative values up to -10
++
+
+add  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=0 
+
+---
+
+
+
+
+FJ
+
+description.nl:
+optellen voor -10..20 met negatieve en positieve getallen
++
+description:
+additions in the range -10..20 with negative and positive values
++
+
+add  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=10 
+
+---
+
+
+
+
+FK
+
+description.nl:
+aftrekken voor 1..20 met negatieve getallen tot -10 zonder lenen
++
+description:
+subtractions in the range 1..20 with negative values up to -10 without carry
++
+
+sub  lh_low=1  lh_high=20  rh_low=-10  rh_high=20   p1  0notok    p2 0notok lh_low=-9  lh_high=-1 no10wrap
+
+---
+
+
+
+
+FL
+
+description.nl:
+aftrekken voor 1..20 met negatieve getallen tot -10 met lenen
++
+description:
+subtractions in the range 1..20 with negative values up to -10 with carry
++
+
+sub  lh_low=1  lh_high=20  rh_low=-10  rh_high=20   p1  0notok    p2 0notok lh_low=-10  lh_high=-1 10wrap
+
+---
+
+
+
+
+FM
+
+description.nl:
+aftrekken voor -10..20 met negatieve getallen tot -10
++
+description:
+subtractions in the range -10..20 with negative values up to -10
++
+
+sub  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=0 
+
+---
+
+
+
+
+FN
+
+description.nl:
+aftrekken voor -10..20 met negatieve en positieve getallen
++
+description:
+subtractions in the range -10..20 with negative and positive values
++
+
+sub  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=10 
+
+---
+
+
+
+
+FO
+
+description.nl:
+gemengd optellen en aftrekken voor -10..20 met negatieve en positieve getallen
++
+description:
+mixed additions and subtractions in the range -10..20 with negative and positive values
++
+
+add  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=10
+sub  lh_low=-10  lh_high=20  rh_low=-10  rh_high=20   p1  0ok    p2 0ok lh_low=-10  lh_high=10 
+
+---
+
+
+
+FP
+
+description.nl:
+aftrekken voor 1..10 met lenen vanuit de 10
++
+description:
+subtractions in the range 1..10 with mandatory carry from 10
++
+
+sub  lh_low=1  lh_high=10  rh_low=10  rh_high=10   0notok
+
+---
+
+
+FQ
+
+description.nl:
+machtsverheffen met machten 1..10 voor de grondtallen 1..10 met als hoogst mogelijke uitkomst 1000
++
+description:
+powers in the range 1..10 for base 1..10 with highest possible result value 1000
++
+
+pow lh_low=1 lh_high=10 rh_low=0 rh_high=1000 p2 lh_low=1 lh_high=10 px 
+
+---
+
+
+FR
+
+description.nl:
+machtsverheffen met machten 0..10 voor de grondtallen 1..10 met als hoogst mogelijke uitkomst 1000
++
+description:
+powers in the range 0..10 for base 1..10 with highest possible result value 1000
++
+
+pow lh_low=1 lh_high=10 rh_low=0 rh_high=1000 p2 lh_low=1 lh_high=10 px 
+
+---
+
+
+FS
+
+description.nl:
+machtsverheffen met machten 2..8 voor de grondtallen 1..10 met als hoogst mogelijke uitkomst 1000
++
+description:
+powers in the range 2..8 for base 1..10 with highest possible result value 1000
++
+
+pow lh_low=1 lh_high=10 rh_low=0 rh_high=1000 p2 T2,3,4,5,6,7,8 px 
+
+---
+
+
+FT
+
+description.nl:
+machtsverheffen met machten 2..8 voor de grondtallen 2..10 met als hoogst mogelijke uitkomst 1000
++
+description:
+powers in the range 2..8 for base 2..10 with highest possible result value 1000
++
+
+pow lh_low=1 lh_high=10 rh_low=0 rh_high=1000 p1 1notok p2 T2,3,4,5,6,7,8 px 
+# alternative which is identical:
+# pow lh_low=2 lh_high=10 rh_low=0 rh_high=1000 p2 T2,3,4,5,6,7,8 px 
+
+
+---
+
+
+
+
+FU
+
+description.nl:
+machtsverheffen met machten 1..4 voor de grondtallen 1..20 met als hoogst mogelijke uitkomst 1000
++
+description:
+powers in the range 1..4 for base 1..20 with highest possible result value 1000
++
+
+pow lh_low=1 lh_high=20 rh_low=0 rh_high=1000 p2 T1,2,3,4 px 
+
+---
+
+
+
+

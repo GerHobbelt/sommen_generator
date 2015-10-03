@@ -1,0 +1,6 @@
+# robots.txt for http://education.schaake.org/
+
+# User-agent: *
+# Disallow: 
+# Everything may be grabbed
+

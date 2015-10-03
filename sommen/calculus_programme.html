@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+
+<html>
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Windows (vers 18 June 2008), see www.w3.org">
+  <link rel="stylesheet" type="text/css" href="../edu.css">
+
+  <title></title>
+</head>
+
+<body>
+  <h1>Calculus Education Plan for Primary School</h1>
+
+  <p>TBD TBD TBD</p>
+
+  <p>calendar + links to presets + chapter calculus exercises...</p>
+
+  <p>Short explanation what to do and why.</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>&nbsp;</p>
+
+  <p>This (web) tool can be used to generate unlimited series of calculus
+  exercises for primary school children. You can either select one or more
+  'presets' (Use CONTROL or SHIFT key with the mouse to select multiple presets
+  at once) in the top half of the web form <a href=
+  "calculus_gen_form2.html">here</a> or <a href=
+  "calculus_gen_form.html">here</a> and/or specify your own custom exercise
+  setup in the bottom half of the web form <a href=
+  "calculus_gen_form2.html">here</a>.</p>
+
+  <h2>Table of Contents</h2>
+
+  <ul>
+    <li><a href=
+    "#Definition_of_terms_used_throughout_this_system_and_its_documentation">Definition
+    of terms used throughout this system and its documentation</a></li>
+
+    <li>
+      <a href="#How_does_it_work">How does it work?</a>
+
+      <ul>
+        <li><a href="#sample1">A basic example</a></li>
+
+        <li><a href="#sample2">A basic example; exercises only, <em>no</em>
+        answers</a></li>
+
+        <li><a href="#sample3">A basic example; mixing presets; create a mixed
+        exercise set</a></li>
+
+        <li><a href="#sample4">An advanced example; defining custom exercises
+        as 'styles'</a></li>
+      </ul>
+    </li>
+  </ul>
+
+  <h2><a name=
+  "Definition_of_terms_used_throughout_this_system_and_its_documentation" id=
+  "Definition_of_terms_used_throughout_this_system_and_its_documentation">Definition
+  of terms used throughout this system and its documentation</a></h2>
+
+  <dl>
+    <dt>Exercise</dt>
+
+    <dd>
+      <p>A single 'sum'.</p>
+
+      <p>This use of the term 'exercise' is slightly off from the usual meaning
+      in (primary) school. In this system, 'exercise' is a <em>single item to
+      work on</em>. As the <em>basic element of this system</em> is the 'sum'
+      itself and <em>not</em> the 'sheet' of paper it is printed on or the
+      'task', i.e. the collection of sums of which this one sum will be but a
+      small part, this may lead to a bit of confusion at first. See also why we
+      use the term 'exercise' like that in the description of the term 'style'
+      below.</p>
+    </dd>
+
+    <dt>Chapter</dt>
+
+    <dd>
+      <p>A single collection of sums (exercises); often&mdash;but not
+      necessarily&mdash;all these exercises are of one type (a.k.a. 'style').
+      One 'chapter' can be thought of as one sheet of sums. Technically,
+      'chapters' are sequence numbers identifying different sheets of exercises
+      of the same type (or collection of types ('styles')).</p>
+
+      <p>As such, <em>a 'chapter' number does not uniquely identify the
+      exercise sheet</em>! (See the <a href="#sample4">fourth example</a> for a
+      (partial) solution for this. See also the tips in the preceding examples,
+      for example <a href="#TIP_remember_your_settings">here</a>, for other
+      ways to cope with this.)</p>
+
+      <p>Think of a 'chapter' as a single task or exercise sheet.</p>
+
+      <p>'Chapters' are designed to be handed out to students as one-at-a-time
+      tests: a 'chapter' is a unit of work for a student and should be
+      completed on a single day. You may choose to hand out 'chapters' in
+      bundles and/or request the student to complete multiple exercises
+      ('chapters') on a single day; that is up to you and the situation.
+      However, a 'chapter' should be completed, once started.</p>
+    </dd>
+
+    <dt>Style (a.k.a. 'type')</dt>
+
+    <dd>
+      <p>An exercise definition, which is used by the generator to
+      produce/select a series of exercises of this particular type. A style,
+      for instance, instructs the generator to produce <em>exercises</em> to
+      help the student <em>exercise</em> a particular subject, say, the
+      addition of integer numbers up to 20. (Hence the name '<em>exercise</em>'
+      for a single 'sum'; once you arrive at the stage where you are going to
+      test [the tables of] multiplication, division and, later still, fractions
+      and beyond, the word 'sum' does not cover it anymore, as these are not
+      'sums' (additions) but rather different calculus <em>exercises</em>.</p>
+    </dd>
+
+    <dt>Preset</dt>
+
+    <dd>
+      <p>A predefined style, or set of styles, with optional extra parameters.
+      'Presets' are a technical solution, meant to help users of this calculus
+      system produce exercise sheets (a.k.a. 'chapters') quickly and with
+      maximum ease. Hence quite a few presets for 'first graders' (and several
+      for students beyond that stage and age) are provided as one-click
+      selections in the generator-driving <a href="calculus_gen_form2.html">web
+      form</a>.</p>
+
+      <p>Be aware that a 'preset' can contain one <em>or more</em> 'styles' and
+      <em>can optionally contain additional parameters</em> to drive the
+      calculus exercise generator. See the technical documentation if you wish
+      to know more about presets, styles, their use and operation.</p>
+    </dd>
+
+    <dt>XXX</dt>
+
+    <dd>
+      <p>YYY</p>
+    </dd>
+  </dl>
+
+  <h2><a name="How_does_it_work" id="How_does_it_work">How does it
+  work?</a></h2>
+
+  <p>This section shows you several examples of use/try, where the examples
+  slowly increase in complexity, starting with he most basic, introducing you
+  to the various features of the calculus exercise generator step by step.</p>
+
+  <blockquote>
+    <p>Following through ('replaying') an example takes a few minutes only, and
+    it is very useful to try a few (preferably: all of them) for you to get a
+    feel for the way the system works and what it can do for you while spending
+    the least amount of time on it.</p>
+  </blockquote>
+</body>
+</html>
